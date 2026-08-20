@@ -116,14 +116,14 @@ func RegisterAdminGroupApi(api *gin.RouterGroup) {
 	api.POST("/system/config/export", middleware.HasPerm("system:config:export"), middleware.OperLogMiddleware("导出参数配置", constant.REQUEST_BUSINESS_TYPE_EXPORT), (&systemcontroller.ConfigController{}).Export)
 	api.DELETE("/system/config/refreshCache", middleware.HasPerm("system:config:remove"), middleware.OperLogMiddleware("刷新参数配置缓存", constant.REQUEST_BUSINESS_TYPE_DELETE), (&systemcontroller.ConfigController{}).RefreshCache)
 
-	api.GET("/monitor/logininfor/list", middleware.HasPerm("monitor:operlog:list"), (&monitorcontroller.LogininforController{}).List) // 获取登录日志列表
+	api.GET("/monitor/logininfor/list", middleware.HasPerm("monitor:logininfor:list"), (&monitorcontroller.LogininforController{}).List) // 获取登录日志列表
 
 	api.DELETE("/monitor/logininfor/:infoIds", middleware.HasPerm("monitor:logininfor:remove"), middleware.OperLogMiddleware("删除登录日志", constant.REQUEST_BUSINESS_TYPE_DELETE), (&monitorcontroller.LogininforController{}).Remove)
 	api.DELETE("/monitor/logininfor/clean", middleware.HasPerm("monitor:logininfor:remove"), middleware.OperLogMiddleware("清空登录日志", constant.REQUEST_BUSINESS_TYPE_DELETE), (&monitorcontroller.LogininforController{}).Clean)
 	api.GET("/monitor/logininfor/unlock/:userName", middleware.HasPerm("monitor:logininfor:unlock"), middleware.OperLogMiddleware("账户解锁", constant.REQUEST_BUSINESS_TYPE_DELETE), (&monitorcontroller.LogininforController{}).Unlock)
 	api.POST("/monitor/logininfor/export", middleware.HasPerm("monitor:logininfor:export"), middleware.OperLogMiddleware("导出登录日志", constant.REQUEST_BUSINESS_TYPE_EXPORT), (&monitorcontroller.LogininforController{}).Export)
 
-	api.GET("/monitor/operlog/list", middleware.HasPerm("monitor:logininfor:list"), (&monitorcontroller.OperlogController{}).List) // 获取操作日志列表
+	api.GET("/monitor/operlog/list", middleware.HasPerm("monitor:operlog:list"), (&monitorcontroller.OperlogController{}).List) // 获取操作日志列表
 
 	api.DELETE("/monitor/operlog/:operIds", middleware.HasPerm("monitor:operlog:remove"), middleware.OperLogMiddleware("删除操作日志", constant.REQUEST_BUSINESS_TYPE_DELETE), (&monitorcontroller.OperlogController{}).Remove)
 	api.DELETE("/monitor/operlog/clean", middleware.HasPerm("monitor:operlog:remove"), middleware.OperLogMiddleware("清空操作日志", constant.REQUEST_BUSINESS_TYPE_DELETE), (&monitorcontroller.OperlogController{}).Clean)
