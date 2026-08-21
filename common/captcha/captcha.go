@@ -1,19 +1,30 @@
 package captcha
 
-import "github.com/mojocn/base64Captcha"
+import (
+	"sync"
+
+	"github.com/mojocn/base64Captcha"
+)
 
 type Captcha struct {
 	captcha *base64Captcha.Captcha
 }
 
+var (
+	captchaOnce sync.Once
+	captcha     *Captcha
+)
+
 // 初始化验证码
 func NewCaptcha() *Captcha {
+	captchaOnce.Do(func() {
+		driver := base64Captcha.NewDriverDigit(40, 100, 4, 0.7, 1)
+		captcha = &Captcha{
+			captcha: base64Captcha.NewCaptcha(driver, &RedisStore{}),
+		}
+	})
 
-	driver := base64Captcha.NewDriverDigit(40, 100, 4, 0.7, 1)
-
-	return &Captcha{
-		captcha: base64Captcha.NewCaptcha(driver, &RedisStore{}),
-	}
+	return captcha
 }
 
 // 生成验证码
